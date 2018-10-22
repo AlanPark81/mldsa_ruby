@@ -12,9 +12,25 @@ class LinkedList
   def initialize
     @head = nil
     @tail = nil
+    @size = 0
+  end
+
+  def front
+    if @head.nil?
+      raise "empty"
+    end
+    @head.data
+  end
+
+  def back
+    if @tail.nil?
+      raise "empty"
+    end
+    @tail.data
   end
 
   def insert_back data
+    @size += 1
     if @head.nil?
       @head = Node.new data
       @tail = @head
@@ -26,6 +42,7 @@ class LinkedList
   end
 
   def insert_front data
+    @size += 1
     if @head.nil?
       @head = Node.new data
       @tail = @head
@@ -46,6 +63,7 @@ class LinkedList
     end
     ret_val = @head.data
     @head = @head.next
+    @size -= 1
     ret_val
   end
 
@@ -55,7 +73,10 @@ class LinkedList
     end
     ret_val = @tail.data
     @tail = @tail.prev
+    @size -= 1
     ret_val
   end
+
+  attr_reader :size
 end
 

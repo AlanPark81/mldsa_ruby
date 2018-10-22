@@ -7,12 +7,20 @@ describe LinkedList do
       it "return inserted object back and forth" do
         list = LinkedList.new
         expect(list.is_empty?).to eq true
+        expect{ list.front }.to raise_error "empty"
+        expect{ list.back }.to raise_error "empty"
         list.insert_back 3
+        expect(list.front).to eq 3
+        expect(list.back).to eq 3
         expect(list.pop_front).to eq 3
 
         list = LinkedList.new
         expect(list.is_empty?).to eq true
+        expect{ list.front }.to raise_error "empty"
+        expect{ list.back }.to raise_error "empty"
         list.insert_back 3
+        expect(list.front).to eq 3
+        expect(list.back).to eq 3
         expect(list.pop_back).to eq 3
       end
     end
@@ -183,6 +191,55 @@ describe LinkedList do
         expect( list.pop_front ).to eq 2
       end
     end
+
+    context "three item list" do
+      it "returns the first item" do
+        list = LinkedList.new
+        expect(list.is_empty?).to eq true
+        list.insert_back 1
+        expect(list.is_empty?).to eq false
+        list.insert_back 2
+        expect(list.is_empty?).to eq false
+        list.insert_back 3
+
+        expect( list.pop_front ).to eq 1
+        expect( list.pop_front ).to eq 2
+        expect( list.pop_front ).to eq 3
+
+        list = LinkedList.new
+        expect(list.is_empty?).to eq true
+        list.insert_front 1
+        expect(list.is_empty?).to eq false
+        list.insert_front 2
+        expect(list.is_empty?).to eq false
+        list.insert_front 3
+        expect( list.pop_front ).to eq 3
+        expect( list.pop_front ).to eq 2
+        expect( list.pop_front ).to eq 1
+
+        list = LinkedList.new
+        expect(list.is_empty?).to eq true
+        list.insert_back 1
+        expect(list.is_empty?).to eq false
+        list.insert_front 2
+        expect(list.is_empty?).to eq false
+        list.insert_back 3
+        expect( list.pop_front ).to eq 2
+        expect( list.pop_front ).to eq 1
+        expect( list.pop_front ).to eq 3
+
+        list = LinkedList.new
+        expect(list.is_empty?).to eq true
+        list.insert_front 1
+        expect(list.is_empty?).to eq false
+        list.insert_back 2
+        expect(list.is_empty?).to eq false
+        list.insert_front 3
+        expect( list.pop_front ).to eq 3
+        expect( list.pop_front ).to eq 1
+        expect( list.pop_front ).to eq 2
+      end
+    end
   end
 
   describe 'pop_back' do
@@ -241,6 +298,74 @@ describe LinkedList do
         list.insert_back 2
         expect( list.pop_back ).to eq 2
         expect( list.pop_back ).to eq 1
+      end
+    end
+
+    context "three item list" do
+      it "returns the first item" do
+        list = LinkedList.new
+        expect(list.is_empty?).to eq true
+        list.insert_back 1
+        expect(list.is_empty?).to eq false
+        expect(list.size).to eq 1
+        list.insert_back 2
+        expect(list.is_empty?).to eq false
+        expect(list.size).to eq 2
+        list.insert_back 3
+        expect(list.size).to eq 3
+        expect( list.front ).to eq 1
+        expect( list.back ).to eq 3
+        expect( list.pop_back ).to eq 3
+        expect( list.pop_back ).to eq 2
+        expect( list.pop_back ).to eq 1
+
+        list = LinkedList.new
+        expect(list.is_empty?).to eq true
+        list.insert_front 1
+        expect(list.size).to eq 1
+        expect(list.is_empty?).to eq false
+        list.insert_front 2
+        expect(list.size).to eq 2
+        expect(list.is_empty?).to eq false
+        list.insert_front 3
+        expect(list.size).to eq 3
+        expect( list.front ).to eq 3
+        expect( list.back ).to eq 1
+        expect( list.pop_back ).to eq 1
+        expect( list.pop_back ).to eq 2
+        expect( list.pop_back ).to eq 3
+
+        list = LinkedList.new
+        expect(list.is_empty?).to eq true
+        list.insert_back 1
+        expect(list.size).to eq 1
+        expect(list.is_empty?).to eq false
+        list.insert_front 2
+        expect(list.size).to eq 2
+        expect(list.is_empty?).to eq false
+        list.insert_back 3
+        expect(list.size).to eq 3
+        expect( list.front ).to eq 2
+        expect( list.back ).to eq 3
+        expect( list.pop_back ).to eq 3
+        expect( list.pop_back ).to eq 1
+        expect( list.pop_back ).to eq 2
+
+        list = LinkedList.new
+        expect(list.is_empty?).to eq true
+        list.insert_front 1
+        expect(list.size).to eq 1
+        expect(list.is_empty?).to eq false
+        list.insert_back 2
+        expect(list.size).to eq 2
+        expect(list.is_empty?).to eq false
+        list.insert_front 3
+        expect(list.size).to eq 3
+        expect( list.front ).to eq 3
+        expect( list.back ).to eq 2
+        expect( list.pop_back ).to eq 2
+        expect( list.pop_back ).to eq 1
+        expect( list.pop_back ).to eq 3
       end
     end
   end
