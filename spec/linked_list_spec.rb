@@ -156,6 +156,7 @@ describe LinkedList do
         expect(list.is_empty?).to eq false
         list.insert_back 2
         expect(list.pop_front).to eq 1
+        expect(list.pop_front).to eq 2
 
         list = LinkedList.new
         expect(list.is_empty?).to eq true
@@ -163,6 +164,7 @@ describe LinkedList do
         expect(list.is_empty?).to eq false
         list.insert_front 2
         expect(list.pop_front).to eq 2
+        expect(list.pop_front).to eq 1
 
         list = LinkedList.new
         expect(list.is_empty?).to eq true
@@ -170,6 +172,7 @@ describe LinkedList do
         expect(list.is_empty?).to eq false
         list.insert_front 2
         expect(list.pop_front).to eq 2
+        expect(list.pop_front).to eq 1
 
         list = LinkedList.new
         expect(list.is_empty?).to eq true
@@ -177,6 +180,7 @@ describe LinkedList do
         expect(list.is_empty?).to eq false
         list.insert_back 2
         expect( list.pop_front ).to eq 1
+        expect( list.pop_front ).to eq 2
       end
     end
   end
@@ -212,6 +216,7 @@ describe LinkedList do
         expect(list.is_empty?).to eq false
         list.insert_back 2
         expect( list.pop_back ).to eq 2
+        expect( list.pop_back ).to eq 1
 
         list = LinkedList.new
         expect(list.is_empty?).to eq true
@@ -219,6 +224,7 @@ describe LinkedList do
         expect(list.is_empty?).to eq false
         list.insert_front 2
         expect( list.pop_back ).to eq 1
+        expect( list.pop_back ).to eq 2
 
         list = LinkedList.new
         expect(list.is_empty?).to eq true
@@ -226,6 +232,7 @@ describe LinkedList do
         expect(list.is_empty?).to eq false
         list.insert_front 2
         expect( list.pop_back ).to eq 1
+        expect( list.pop_back ).to eq 2
 
         list = LinkedList.new
         expect(list.is_empty?).to eq true
@@ -233,6 +240,7 @@ describe LinkedList do
         expect(list.is_empty?).to eq false
         list.insert_back 2
         expect( list.pop_back ).to eq 2
+        expect( list.pop_back ).to eq 1
       end
     end
   end

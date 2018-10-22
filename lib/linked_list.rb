@@ -29,6 +29,7 @@ class LinkedList
     if @head.nil?
       @head = Node.new data
       @tail = @head
+      return
     end
     @head.prev = Node.new data
     @head.prev.next = @head
