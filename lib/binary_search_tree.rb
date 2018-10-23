@@ -16,7 +16,14 @@ class BinaryTreeNode
       parent = node
       node = node.right
     end
-    parent
+    if parent.nil?
+      ret_val=self.right.data
+      self.right = nil
+    else
+      ret_val = node.data
+      parent.right = nil
+    end
+    ret_val
   end
 
   def take_min_under_this_node
@@ -28,29 +35,34 @@ class BinaryTreeNode
       parent = node
       node = node.left
     end
-    parent
+    if parent.nil?
+      ret_val=self.left.data
+      self.left = nil
+    else
+      ret_val = node.data
+      parent.left = nil
+    end
+    ret_val
   end
 
   def take_closest_data
     return false unless @left or @right
 
     if @left
-      parent = @left.take_max_under_this_node
-      if parent.nil?
+      data = @left.take_max_under_this_node
+      if data.nil?
         ret_val = @left.data
-        @left = nil
+        @left = @left.left
       else
-        ret_val = parent.right.data
-        parent.right = nil
+        ret_val = data
       end
     elsif @right
-      parent = @right.take_min_under_this_node
-      if parent.nil?
+      data = @right.take_min_under_this_node
+      if data.nil?
         ret_val = @right.data
-        @right = nil
+        @right = @right.right
       else
-        ret_val = parent.left.data
-        parent.left = nil
+        ret_val = data
       end
     end
     self.data = ret_val
