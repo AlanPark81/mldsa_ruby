@@ -24,7 +24,7 @@ describe BinarySearchTree do
         bst = BinarySearchTree.new
         bst.insert 4
         bst.insert 3
-        expect( bst.size ).to eq 2
+        expect(bst.size).to eq 2
         expect(bst.contains 4).to eq true
         expect(bst.contains 3).to eq true
 

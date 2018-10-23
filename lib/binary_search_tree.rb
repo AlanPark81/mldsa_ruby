@@ -8,35 +8,33 @@ class BinaryTreeNode
   end
 
   def take_max_under_this_node
-    if @right.nil?
-      return nil
-    else
-      parent=nil
-      node = @right
-      while not node.right.nil?
-        parent=node
-        node=node.right
-      end
-      return parent
+    return nil if right.nil?
+
+    parent = nil
+    node = right
+    while node.right
+      parent = node
+      node = node.right
     end
+    parent
   end
 
   def take_min_under_this_node
-    if @left.nil?
-      return nil
-    else
-      parent = nil
-      node = @left
-      while not node.left.nil?
-        parent = node
-        node=node.left
-      end
-      return parent
+    return nil if left.nil?
+
+    parent = nil
+    node = left
+    while node.left
+      parent = node
+      node = node.left
     end
+    parent
   end
 
   def take_closest_data
-    if not @left.nil?
+    return false unless @left or @right
+
+    if @left
       parent = @left.take_max_under_this_node
       if parent.nil?
         ret_val = @left.data
@@ -45,8 +43,7 @@ class BinaryTreeNode
         ret_val = parent.right.data
         parent.right = nil
       end
-      return ret_val
-    elsif not @right.nil?
+    elsif @right
       parent = @right.take_min_under_this_node
       if parent.nil?
         ret_val = @right.data
@@ -55,25 +52,24 @@ class BinaryTreeNode
         ret_val = parent.left.data
         parent.left = nil
       end
-      return ret_val
     end
-    nil
+    self.data = ret_val
+    return true
+  end
+
+  def insert_right data
+    @right.insert_node data if @right
+    @right ||= BinaryTreeNode.new data unless @right
+  end
+
+  def insert_left data
+    @left.insert_node data if @left
+    @left ||= BinaryTreeNode.new data unless @left
   end
 
   def insert_node data
-    if data > @data
-      if @right.nil?
-        @right=BinaryTreeNode.new data
-      else
-        @right.insert_node data
-      end
-    else
-      if @left.nil?
-        @left=BinaryTreeNode.new data
-      else
-        @left.insert_node data
-      end
-    end
+    insert_right data if data > @data
+    insert_left data if data < @data
   end
 end
 
@@ -86,65 +82,42 @@ class BinarySearchTree
   end
 
   def insert data
-    if @root.nil?
-      @root = BinaryTreeNode.new data
-    else
-      @root.insert_node data
-    end
-    @size+=1
+    @root.insert_node data if @root
+    @root = BinaryTreeNode.new data if @root.nil?
+    @size += 1
   end
 
   def remove data
-    if @root.nil?
-      return false
+    return false if @root.nil?
+
+    if @root.data == data
+      @root = nil unless @root.take_closest_data
+      @size -= 1
+      return true
     end
 
     parent = nil
     node = @root
-    while not node.nil?
+    while node
       if node.data == data
-        if node == @root
-          val = @root.take_closest_data
-          if val.nil?
-            @root = nil
-          else
-            @root.data = val
-          end
-        else
-          val = node.take_closest_data
-          if val.nil?
-            if node.data<parent.data
-              parent.left = nil
-            else
-              parent.right = nil
-            end
-          else
-            node.data = val
-          end
-        end
-        @size-=1
+        result = node.take_closest_data
+        parent.left = nil if node.data < parent.data && !result
+        parent.right = nil if node.data > parent.data && !result
+        @size -= 1
         return true
       end
       parent = node
-      if data < node.data
-        node = node.left
-      else
-        node = node.right
-      end
+      node = (data < node.data ? node.left : node.right)
     end
-    return false
+    false
   end
 
   def contains data
     node = @root
-    while !node.nil? do
-      if data == node.data
-        return true
-      elsif data < node.data
-        node = node.left
-      else
-        node = node.right
-      end
+    while node do
+      return true if data == node.data
+
+      node = ( data < node.data ? node.left : node.right)
     end
     false
   end
