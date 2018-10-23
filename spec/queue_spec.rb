@@ -38,7 +38,7 @@ describe Queue do
     end
   end
 
-  describe "dequeue" do
+  describe "enqueue and dequeue" do
     context "empty queue" do
       it "raise empty" do
         queue=Queue.new
