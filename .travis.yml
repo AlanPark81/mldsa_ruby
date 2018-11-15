@@ -33,7 +33,7 @@ script:
     # Build main and tests
     ############################################################################
      - cd /home/travis/build/AlanPark81/mldsa_ruby
-     - gem install rspec
+     - sudo gem install rspec
      - rspec --init
      - rspec
 
