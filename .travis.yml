@@ -1,0 +1,39 @@
+language: ruby
+
+env:
+  global:
+    # Ubuntu version
+    - LINUX_DIST=xenial
+    - DEPS_DIR=${TRAVIS_BUILD_DIR}/deps
+    - RUN_TESTS=true
+    - COVERAGE=false
+
+matrix:
+  include:
+    - os: linux
+      dist: xenial
+      sudo: true
+      addons:
+       apt:
+         packages: &precise_latest_boost_packages
+           - ruby
+           # Misc
+         sources: &precise_latest_boost_sources
+           - ubuntu-toolchain-r-test
+           - llvm-toolchain-precise-3.7
+    
+before_install:
+    # Combine global build options with OS/compiler-dependent options
+install:
+    - echo ${PATH}
+    - sudo pip install codecov
+    
+script:
+    ############################################################################
+    # Build main and tests
+    ############################################################################
+     - cd /home/travis/build/AlanPark81/mldsa_ruby
+     - rspec
+
+after_success:
+- codecov -t c376990f-2ad6-4f7b-bbdb-5378a52e295c -X gcov
